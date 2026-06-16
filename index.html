@@ -3,23 +3,30 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<meta name="theme-color" content="#0f172a" />
-<title>TKD Footwork Trainer — 30 Day</title>
+<meta name="theme-color" content="#5d9c3c" />
+<title>KickCraft — 30 Day Footwork</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
 <!-- ===================== HOME ===================== -->
 <section id="home" class="screen active">
-  <h1 class="title">🥋 Footwork Trainer</h1>
+  <h1 class="title">⛏️ KickCraft</h1>
   <p class="subtitle">Back &nbsp;→&nbsp; In &nbsp;→&nbsp; Kick &nbsp;→&nbsp; Reset</p>
 
   <div class="day-big" id="homeDay">1</div>
   <div class="day-label" id="homeDayLabel">DAY 1 / 30</div>
 
-  <button class="start-btn" id="startBtn">Start 10-Min Training</button>
+  <div class="diamonds" id="homeDiamonds"></div>
+
+  <button class="start-btn" id="startBtn">Start Training</button>
 
   <div class="note" id="homeNote"></div>
+
+  <div class="scores" id="homeScores"></div>
 
   <div class="dots" id="dots"></div>
 </section>
@@ -47,23 +54,77 @@
   </div>
 </section>
 
+<!-- ===================== STRENGTH (plyo circuit) ===================== -->
+<section id="strength" class="screen">
+  <div class="train-top">
+    <div class="timer" id="strTimer">0:30</div>
+    <div class="train-meta">
+      <div class="phase-pill" id="strPill">💪 STRENGTH</div>
+      <div style="margin-top:4px;">Round <span id="strRound">1</span>/<span id="strRounds">2</span> · Move <span id="strMove">1</span>/<span id="strMoves">5</span></div>
+      <div style="margin-top:6px; display:flex; gap:6px; justify-content:flex-end;">
+        <button class="quit" id="strSoundBtn" title="Sound on/off">🔊</button>
+        <button class="quit" id="strQuitBtn">Quit</button>
+      </div>
+    </div>
+  </div>
+  <div class="time-bar"><i id="strTimeFill"></i></div>
+
+  <div class="cue" id="strCue">
+    <div class="cue-arrow" id="strArrow">💪</div>
+    <div class="cue-text" id="strText">GET READY</div>
+    <div class="cue-sub" id="strSub">PLYO STRENGTH</div>
+    <div class="cue-bar"><i id="strFill"></i></div>
+    <button class="start-btn" id="strStartBtn">Start Strength</button>
+  </div>
+</section>
+
+<!-- ===================== CONDITIONING (AMRAP) ===================== -->
+<section id="condition" class="screen">
+  <div class="train-top">
+    <div class="timer" id="amTimer">5:00</div>
+    <div class="train-meta">
+      <div class="phase-pill" id="amPill">🔥 AMRAP</div>
+      <div style="margin-top:4px;" id="amBeat">High score: —</div>
+      <div style="margin-top:6px; display:flex; gap:6px; justify-content:flex-end;">
+        <button class="quit" id="amSoundBtn" title="Sound on/off">🔊</button>
+        <button class="quit" id="amQuitBtn">Quit</button>
+      </div>
+    </div>
+  </div>
+  <div class="time-bar"><i id="amTimeFill"></i></div>
+
+  <div class="cue" id="amCue">
+    <div class="cue-arrow" id="amArrow">🔥</div>
+    <div class="cue-text" id="amText">AMRAP</div>
+    <div class="cue-sub" id="amSub">As many reps as possible</div>
+
+    <button class="start-btn" id="amStartBtn">Start AMRAP</button>
+
+    <div id="amEntry" class="am-entry">
+      <div class="cue-sub" id="amPrompt">HOW MANY REPS?</div>
+      <input class="rep-input" id="amInput" type="number" inputmode="numeric" min="0" placeholder="reps" />
+      <button class="start-btn" id="amSaveBtn">Save Score</button>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== DAY COMPLETE ===================== -->
 <section id="done" class="screen">
-  <div class="big-emoji">🏆</div>
-  <h2 class="done-title">Day Complete!</h2>
+  <div class="big-emoji">💎</div>
+  <h2 class="done-title">Day Crafted!</h2>
   <div class="streak" id="doneStreak">Day 1 done</div>
-  <div class="note">Great discipline. The next day unlocks <b>tomorrow</b>.</div>
-  <button class="ghost-btn" id="doneHomeBtn">Back to Home</button>
+  <div class="note">Nice mining. The next block unlocks <b>tomorrow</b>.</div>
+  <button class="ghost-btn" id="doneHomeBtn">Back to Spawn</button>
 </section>
 
 <!-- ===================== PROGRAM COMPLETE ===================== -->
 <section id="allDone" class="screen">
-  <div class="big-emoji">🎉🥋</div>
-  <h2 class="done-title">30 Days Done!</h2>
-  <div class="streak">You built the habit. Black-belt brain. 🖤</div>
+  <div class="big-emoji">💎⛏️</div>
+  <h2 class="done-title">30 Days Mined!</h2>
+  <div class="streak">You built the habit. Diamond tier. 💠</div>
   <button class="ghost-btn" id="resetProgramBtn">Start a New 30 Days</button>
 </section>
 
-<script src="app.js"></script>
+<script type="module" src="app/main.js"></script>
 </body>
 </html>
