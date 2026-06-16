@@ -125,6 +125,12 @@ export function installCheats(app) {
     },
     reset() { state.wipe(); renderHome(); return "progress wiped"; },
 
+    // --- diamonds: the spendable reward economy (for a parent) ---
+    get diamonds() { return state.diamonds; },
+    spend(n = 1) { const d = state.spendDiamonds(n); renderHome(); return "spent " + (n | 0) + " 💎 → " + d + " left"; },
+    giveDiamonds(n = 1) { const d = state.addDiamonds(n); renderHome(); return "added " + (n | 0) + " 💎 → " + d + " total"; },
+    resetDiamonds() { const d = state.resetDiamonds(); renderHome(); return "💎 reset → " + d; },
+
     // --- peek at the day's chosen exercises without running ---
     preview(day) {
       const d = day || state.currentDay;
@@ -155,6 +161,9 @@ export function installCheats(app) {
         "  kc.fakeScores()         populate the high-score board",
         "  kc.preview(day)         see a day's chosen exercises",
         "  kc.reset()              wipe all progress (incl. 💎)",
+        "  kc.spend(n)             deduct n 💎 when spent in real life",
+        "  kc.giveDiamonds(n)      add n 💎 by hand",
+        "  kc.resetDiamonds()      set 💎 to 0 (keeps scores + day progress)",
         "  kc.state / kc.day       inspect live state (state.diamonds = 💎 count)",
         "\n  💎 a diamond is awarded each time an AMRAP beats a stored high score.",
         "     test it: beat a score twice — e.g. kc.logAmrap(5) one day, kc.logAmrap(50) next."

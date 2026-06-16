@@ -83,6 +83,31 @@ class AppState {
     };
   }
 
+  // ---- diamonds: a spendable reward (earned in recordAmrap above) ----
+  // The kid earns 💎 by beating high scores; a parent deducts them when they
+  // get spent in real life (screen time, a treat, whatever you've agreed on).
+
+  // Add diamonds by hand. Returns the new balance.
+  addDiamonds(n) {
+    this.diamonds += Math.max(0, n | 0);
+    this.save();
+    return this.diamonds;
+  }
+
+  // Deduct diamonds when they're spent. Never drops below zero.
+  spendDiamonds(n) {
+    this.diamonds = Math.max(0, this.diamonds - Math.max(0, n | 0));
+    this.save();
+    return this.diamonds;
+  }
+
+  // Wipe the diamond balance back to zero (keeps high scores + day progress).
+  resetDiamonds() {
+    this.diamonds = 0;
+    this.save();
+    return this.diamonds;
+  }
+
   // Mark today's day finished and advance. Returns the day that was completed.
   completeDay() {
     const day = this.currentDay;
