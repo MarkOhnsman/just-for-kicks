@@ -30,7 +30,7 @@ The footwork calls get faster and the moves get harder over the 30 days.
 
 ## How to use it
 
-1. **Open the app** (see *Running it* below).
+1. **Open the app** at [markohnsman.github.io/just-for-kicks](https://markohnsman.github.io/just-for-kicks).
 2. **Make some space**, prop the phone up where you can hear it, and tap
    **Start Training**.
 3. **Follow the voice.** It tells you each move, beeps the pace, runs the
@@ -72,68 +72,10 @@ kc.help()            // the full command list
 
 ---
 
-## Running it
+## Play it
 
-KickCraft is a plain web app (HTML, CSS, and JavaScript) — nothing to install
-and no build step. Because it's split into modules, it must be *served* over a
-local web address rather than opened straight from a file:
+KickCraft runs right in the browser — nothing to install:
 
-```bash
-python3 -m http.server 8000
-```
+**👉 [markohnsman.github.io/just-for-kicks](https://markohnsman.github.io/just-for-kicks)**
 
-Then open **http://localhost:8000** in a browser (a phone on the same Wi-Fi can
-open it using the computer's address). On a phone, "Add to Home Screen" makes it
-feel like a real app.
-
----
-
-## For developers
-
-The code follows a light MVC-style split — small files, each doing one job.
-
-```
-index.html            the screens (markup) + <script type="module" src="app/main.js">
-style.css             all styling
-app/
-  main.js             entry point: builds everything, wires buttons, owns the
-                      day-flow (footwork → strength → AMRAP → done)
-
-  data/               pure data — no logic
-    config.js           timings, levels (PHASES), cue table, storage keys, debug knobs
-    exercises.js        the strength + AMRAP move pools
-
-  state/              the "model"
-    AppState.js         all saved data (day, high scores, diamonds) + the only
-                        methods allowed to change it; saves to localStorage itself
-
-  services/           one engine per block (the "controllers")
-    DrillService.js     footwork drill (cue loop + time-based levels)
-    StrengthService.js  plyometric circuit (work/rest rounds)
-    AmrapService.js     AMRAP clock + rep entry + scoring
-
-  ui/                 the "view"
-    screens.js          show one screen at a time; the $ id helper
-    render.js           paints the home screen, the done screen, and the shared
-                        "cue stage" (emoji + word + countdown bar) used by blocks
-
-  utils/              reusable helpers (no app knowledge)
-    rng.js              random int, deterministic per-day picking, today's date
-    audio.js            beeps/vibration + the single shared sound on/off flag
-    speech.js           spoken cues (muted by the same flag)
-
-  cheats.js           window.kc dev + parent console (type kc.help())
-```
-
-### The main idea
-
-- **data** never changes and holds no logic.
-- **AppState** is the single source of truth for saved progress. Only its
-  methods change saved data, and they persist for you.
-- **services** run the timers and game logic for one block each. They don't know
-  about each other — `main.js` chains them via each service's `onComplete`.
-- **ui** only paints; it reads state but never changes it.
-- **utils** are small and dependency-free (well, `speech` shares the mute flag).
-
-So the flow reads top-down in `main.js`:
-`startDay()` → `drill` → `strength` → `amrap` → `state.completeDay()` → done.
+On a phone, "Add to Home Screen" makes it feel like a real app.
