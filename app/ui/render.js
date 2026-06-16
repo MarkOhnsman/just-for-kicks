@@ -95,7 +95,7 @@ export function renderHome(state) {
     note.className = "note";
     note.innerHTML =
       "Three blocks (~25 min): <b>footwork</b> → <b>plyo strength</b> → " +
-      "<b>AMRAP</b>. Finish all three to complete the day — <b>one day per day</b>.";
+      "<b>AMRAP</b>. Finish all three to complete the day — <b>one block per day</b>.";
   }
 
   renderDiamonds(state);
