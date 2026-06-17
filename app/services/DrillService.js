@@ -75,12 +75,17 @@ export class DrillService {
     return PHASES[PHASES.length - 1];
   }
 
-  // Build one valid cycle of cues for the given level.
+  // Build one valid cycle of cues for the given level. On levels that allow it,
+  // the kick is sometimes a DOUBLE KICK (combo) instead of a single kick.
   generateCycle(p) {
     const cues = [];
     for (let n = ri(1, p.backMax); n > 0; n--) cues.push("BACK");
     for (let n = ri(1, p.inMax); n > 0; n--) cues.push("IN");
-    cues.push(Math.random() < 0.5 ? "KICK_LEFT" : "KICK_RIGHT");
+    if (p.doubleKick && Math.random() < 0.5) {
+      cues.push("DOUBLE_KICK");
+    } else {
+      cues.push(Math.random() < 0.5 ? "KICK_LEFT" : "KICK_RIGHT");
+    }
     cues.push("RESET");
     return cues;
   }

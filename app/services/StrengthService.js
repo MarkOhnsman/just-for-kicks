@@ -14,7 +14,7 @@ import { pickN } from "../utils/rng.js";
 import { sound } from "../utils/audio.js";
 import { speak } from "../utils/speech.js";
 import { $, show } from "../ui/screens.js";
-import { setBar, paintStage, startCountdown } from "../ui/render.js";
+import { setBar, paintStage, startCountdown, renderMoveList } from "../ui/render.js";
 
 const STAGE = { arrow: "strArrow", text: "strText", sub: "strSub", fill: "strFill" };
 
@@ -48,7 +48,9 @@ export class StrengthService {
     $("strArrow").textContent = "💪";
     $("strText").textContent = "STRENGTH";
     $("strText").style.color = "var(--ink)";
-    $("strSub").textContent = moves.length + " moves × " + STR_ROUNDS + " rounds — tap when ready";
+    $("strSub").textContent = moves.length + " moves × " + STR_ROUNDS + " rounds — here's the plan:";
+    renderMoveList("strPreview", moves);
+    $("strPreview").style.display = "";
     $("strTimer").textContent = "--";
     $("strFill").style.transition = "none";
     $("strFill").style.width = "100%";
@@ -61,6 +63,7 @@ export class StrengthService {
     if (!this.sess) return;
     this.sess.phase = "lead";
     $("strStartBtn").style.display = "none";
+    $("strPreview").style.display = "none";
     this.leadIn(0);
   }
 

@@ -21,6 +21,7 @@
   <div class="day-label" id="homeDayLabel">DAY 1 / 30</div>
 
   <div class="diamonds" id="homeDiamonds"></div>
+  <button class="ghost-btn small" id="scoreboardBtn">🏆 Records &amp; 💎</button>
 
   <button class="start-btn" id="startBtn">Start Training</button>
 
@@ -73,6 +74,7 @@
     <div class="cue-arrow" id="strArrow">💪</div>
     <div class="cue-text" id="strText">GET READY</div>
     <div class="cue-sub" id="strSub">PLYO STRENGTH</div>
+    <ul class="move-list" id="strPreview"></ul>
     <div class="cue-bar"><i id="strFill"></i></div>
     <button class="start-btn" id="strStartBtn">Start Strength</button>
   </div>
@@ -97,6 +99,7 @@
     <div class="cue-arrow" id="amArrow">🔥</div>
     <div class="cue-text" id="amText">AMRAP</div>
     <div class="cue-sub" id="amSub">As many reps as possible</div>
+    <div class="am-howto" id="amHowto"></div>
 
     <button class="start-btn" id="amStartBtn">Start AMRAP</button>
 
@@ -115,6 +118,35 @@
   <div class="streak" id="doneStreak">Day 1 done</div>
   <div class="note">Nice mining. The next block unlocks <b>tomorrow</b>.</div>
   <button class="ghost-btn" id="doneHomeBtn">Back to Spawn</button>
+</section>
+
+<!-- ===================== SCOREBOARD ===================== -->
+<section id="scoreboard" class="screen">
+  <div class="sb-wrap">
+    <h2 class="done-title">🏆 Scoreboard</h2>
+
+    <div class="diamonds" id="sbDiamonds"></div>
+    <div class="sb-actions">
+      <button class="ghost-btn small" id="sbAddBtn">＋ Add 💎</button>
+      <button class="ghost-btn small" id="sbRemoveBtn">－ Remove 💎</button>
+    </div>
+    <div class="note" id="sbHint">Adding or removing diamonds needs the parent password.</div>
+
+    <div class="dia-editor" id="diaEditor">
+      <div class="cue-sub" id="diaEditorTitle">ADD 💎</div>
+      <input class="rep-input" id="diaAmount" type="number" inputmode="numeric" min="1" placeholder="how many" />
+      <input class="rep-input" id="diaPass" type="password" autocomplete="off" placeholder="parent password" />
+      <div class="dia-editor-msg" id="diaMsg"></div>
+      <div class="dia-editor-actions">
+        <button class="ghost-btn small" id="diaApplyBtn">Apply</button>
+        <button class="ghost-btn small" id="diaCancelBtn">Cancel</button>
+      </div>
+    </div>
+
+    <div class="scores" id="sbScores"></div>
+
+    <button class="ghost-btn" id="sbHomeBtn">Back to Spawn</button>
+  </div>
 </section>
 
 <!-- ===================== PROGRAM COMPLETE ===================== -->

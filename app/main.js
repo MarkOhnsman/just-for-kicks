@@ -8,7 +8,8 @@ import { state } from "./state/AppState.js";
 import { DrillService } from "./services/DrillService.js";
 import { StrengthService } from "./services/StrengthService.js";
 import { AmrapService } from "./services/AmrapService.js";
-import { renderHome, renderDone } from "./ui/render.js";
+import { DiamondService } from "./services/DiamondService.js";
+import { renderHome, renderDone, renderScoreboard } from "./ui/render.js";
 import { $ } from "./ui/screens.js";
 import { sound } from "./utils/audio.js";
 import { stopSpeech } from "./utils/speech.js";
@@ -21,6 +22,8 @@ let progress = { cycles: 0, amrap: null };
 const drill = new DrillService(state);
 const strength = new StrengthService(state);
 const amrap = new AmrapService(state);
+const diamond = new DiamondService(state);
+diamond.onChange = () => renderScoreboard(state);
 
 // ---- the day flow ----
 function startDay() {
@@ -77,6 +80,15 @@ $("amStartBtn").addEventListener("click", () => amrap.startAmrap());
 $("amSaveBtn").addEventListener("click", () => amrap.save());
 $("amInput").addEventListener("keydown", (e) => { if (e.key === "Enter") amrap.save(); });
 $("doneHomeBtn").addEventListener("click", () => renderHome(state));
+
+// ---- scoreboard: records + parent-gated diamond editing ----
+$("scoreboardBtn").addEventListener("click", () => renderScoreboard(state));
+$("sbHomeBtn").addEventListener("click", () => renderHome(state));
+$("sbAddBtn").addEventListener("click", () => diamond.open("add"));
+$("sbRemoveBtn").addEventListener("click", () => diamond.open("remove"));
+$("diaApplyBtn").addEventListener("click", () => diamond.apply());
+$("diaCancelBtn").addEventListener("click", () => diamond.cancel());
+$("diaPass").addEventListener("keydown", (e) => { if (e.key === "Enter") diamond.apply(); });
 $("resetProgramBtn").addEventListener("click", () => {
   if (confirm("Start a brand new 30-day program? Your old progress will be cleared.")) {
     state.resetProgram();

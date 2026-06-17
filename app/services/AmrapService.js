@@ -33,6 +33,9 @@ export class AmrapService {
     $("amText").classList.remove("count");
     $("amText").style.color = "var(--ink)";
     $("amSub").textContent = ex.sub;
+    $("amHowto").textContent =
+      "Do as many " + ex.unit + " as you can in " + fmt(AMRAP_MS) + ".";
+    $("amHowto").style.display = "";
     $("amBeat").textContent = best > 0
       ? "High score: " + best + " " + ex.unit
       : "First time — set a record!";
@@ -46,6 +49,7 @@ export class AmrapService {
   startAmrap() {
     if (!this.sess || this.sess.running) return;
     $("amStartBtn").style.display = "none";
+    $("amHowto").style.display = "none";
     this.countdown(0);
   }
 

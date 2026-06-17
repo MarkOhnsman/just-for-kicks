@@ -2,7 +2,7 @@
 // SCREENS — the tiny "view router". Only one <section> is visible at a time.
 // =======================================================
 
-export const screens = ["home", "train", "strength", "condition", "done", "allDone"];
+export const screens = ["home", "train", "strength", "condition", "done", "allDone", "scoreboard"];
 
 // Shorthand for document.getElementById — used everywhere we touch the DOM.
 export function $(id) {

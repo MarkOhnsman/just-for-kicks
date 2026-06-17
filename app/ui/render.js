@@ -50,6 +50,25 @@ export function paintStage(els, frame, ms) {
   }
 }
 
+// Build a "here's what's coming" preview list for a block's ready screen:
+// each move as emoji + name + its short description, so the kid (and parent)
+// knows the moves before starting instead of guessing them mid-set.
+export function renderMoveList(id, moves) {
+  const el = $(id);
+  if (!el) return;
+  el.innerHTML = moves
+    .map(
+      (m) =>
+        '<li class="move-item">' +
+        '<span class="move-emoji">' + m.emoji + "</span>" +
+        '<span class="move-info">' +
+        '<span class="move-name">' + m.name + "</span>" +
+        '<span class="move-desc">' + m.sub + "</span>" +
+        "</span></li>"
+    )
+    .join("");
+}
+
 // Drive a numeric "m:ss" countdown inside one element. Returns the interval id
 // so the caller can stop it early; it also clears itself when it hits zero.
 export function startCountdown(timerId, ms) {
@@ -105,28 +124,26 @@ export function renderHome(state) {
   return locked;
 }
 
-function renderDiamonds(state) {
-  const el = $("homeDiamonds");
+// Paint the 💎 tally into the given element (home + scoreboard share this).
+function paintDiamonds(el, state) {
   if (!el) return;
   const n = state.diamonds || 0;
   el.innerHTML =
     '<span class="dia-gem">💎</span> ' + n + " diamond" + (n === 1 ? "" : "s");
 }
 
-// Top AMRAP personal bests, highest first — the "high score" board.
-export function renderScores(state) {
-  const el = $("homeScores");
-  if (!el) return;
+function renderDiamonds(state) {
+  paintDiamonds($("homeDiamonds"), state);
+}
+
+// Build the AMRAP high-score markup, best first. `limit` of 0 = show all.
+function scoresHtml(state, limit) {
   const bests = state.amrapBests || {};
   const names = Object.keys(bests);
-  if (!names.length) {
-    el.innerHTML = "";
-    return;
-  }
+  if (!names.length) return "";
 
   names.sort((a, b) => bests[b] - bests[a]);
-  const rows = names
-    .slice(0, 5)
+  const rows = (limit ? names.slice(0, limit) : names)
     .map((n) => {
       // Find the unit this move was last logged with (defaults to "reps").
       let unit = "reps";
@@ -142,7 +159,27 @@ export function renderScores(state) {
       );
     })
     .join("");
-  el.innerHTML = '<div class="scores-title">⚡ AMRAP HIGH SCORES</div>' + rows;
+  return '<div class="scores-title">⚡ AMRAP HIGH SCORES</div>' + rows;
+}
+
+// Top 5 AMRAP personal bests on the home screen.
+export function renderScores(state) {
+  const el = $("homeScores");
+  if (el) el.innerHTML = scoresHtml(state, 5);
+}
+
+// ---- SCOREBOARD screen ----
+// Full records list + the diamond tally with the parent-gated edit buttons.
+export function renderScoreboard(state) {
+  paintDiamonds($("sbDiamonds"), state);
+  $("diaEditor").classList.remove("show"); // never reopen pre-filled
+  const el = $("sbScores");
+  if (el) {
+    el.innerHTML =
+      scoresHtml(state, 0) ||
+      '<div class="scores-title">No records yet — finish an AMRAP!</div>';
+  }
+  show("scoreboard");
 }
 
 function renderDots(state, day) {
